@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahorcado</title>
+    <link rel="shortcut icon" href="imagenes/ahorcado.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-dark text-light">
+
+    <div class="container text-center mt-5">
+        <div class="card p-4 shadow-lg" style="background: linear-gradient(135deg, #6a0dad, #3c3c3c); border-radius: 15px;">
+            <h2 class="mb-3 text-white">🎮 Juego del Ahorcado</h2>
+            <p class="fs-5 text-warning">Tiempo restante: <span id="timer">60</span> segundos</p>
+            
+            <!-- Imagen del ahorcado -->
+            <img id="ahorcadoImg" src="imagenes/img0.png" alt="Ahorcado" style="width: 150px; margin-bottom: 20px;">
+            
+            <p id="palabra" class="fs-3 text-white"></p>
+            
+            <input type="text" id="letra" class="form-control text-center mt-3" maxlength="1" style="max-width: 60px; margin: auto;">
+            <button class="btn btn-warning mt-3 px-4" onclick="adivinarLetra()">Adivinar</button>
+            
+            <p id="mensaje" class="fs-5 mt-3 text-light"></p>
+        </div>
+    </div>
+
+    <script>
+        const palabras = ["JUEGO", "CODIGO", "AHORCADO", "BOOTSTRAP", "HTML"];
+        let palabraSecreta, palabraOculta, tiempoRestante, timer;
+        let intentosIncorrectos = 0;
+        let letrasIngresadas = new Set();
+
+        function iniciarJuego() {
+            palabraSecreta = palabras[Math.floor(Math.random() * palabras.length)].split("");
+            palabraOculta = palabraSecreta.map(() => "_"); // No revelar ninguna letra
+            tiempoRestante = 60;
+            intentosIncorrectos = 0;
+            letrasIngresadas.clear(); // Reiniciar letras ingresadas
+            document.getElementById("timer").innerText = tiempoRestante;
+            document.getElementById("mensaje").innerText = "";
+            document.getElementById("letra").value = "";
+            document.getElementById("ahorcadoImg").src = "imagenes/img0.png";
+            mostrarPalabra();
+            iniciarTemporizador();
+        }
+
+        function mostrarPalabra() {
+            document.getElementById("palabra").innerText = palabraOculta.join(" ");
+        }
+
+        function iniciarTemporizador() {
+            clearInterval(timer);
+            timer = setInterval(() => {
+                tiempoRestante--;
+                document.getElementById("timer").innerText = tiempoRestante;
+                if (tiempoRestante <= 0) {
+                    clearInterval(timer);
+                    document.getElementById("mensaje").innerText = "⏳ ¡Tiempo agotado! La palabra era: " + palabraSecreta.join("");
+                    setTimeout(iniciarJuego, 3000);
+                }
+            }, 1000);
+        }
+
+        function adivinarLetra() {
+            let letra = document.getElementById("letra").value.toUpperCase().trim();
+            document.getElementById("letra").value = "";
+
+            if (letra === "") {
+                document.getElementById("mensaje").innerText = "⚠️ Debes ingresar una letra.";
+                return;
+            }
+
+            if (letrasIngresadas.has(letra)) {
+                document.getElementById("mensaje").innerText = "⚠️ Ya ingresaste esa letra.";
+                return;
+            }
+
+            letrasIngresadas.add(letra);
+
+            if (palabraSecreta.includes(letra)) {
+                for (let i = 0; i < palabraSecreta.length; i++) {
+                    if (palabraSecreta[i] === letra) {
+                        palabraOculta[i] = letra;
+                    }
+                }
+                mostrarPalabra();
+
+                if (!palabraOculta.includes("_")) {
+                    clearInterval(timer);
+                    document.getElementById("mensaje").innerText = "🎉 ¡Felicidades! Adivinaste la palabra.";
+                    setTimeout(iniciarJuego, 3000);
+                }
+            } else {
+                intentosIncorrectos++;
+                document.getElementById("mensaje").innerText = "❌ Letra incorrecta, intenta de nuevo.";
+                actualizarAhorcado();
+
+                if (intentosIncorrectos >= 6) {
+                    clearInterval(timer);
+                    document.getElementById("mensaje").innerText = "💀 ¡Perdiste! La palabra era: " + palabraSecreta.join("");
+                    setTimeout(iniciarJuego, 3000);
+                }
+            }
+        }
+
+        function actualizarAhorcado() {
+            document.getElementById("ahorcadoImg").src = `imagenes/img${intentosIncorrectos}.png`;
+        }
+
+        iniciarJuego();
+    </script>
+
+    <!-- Botón para volver al inicio -->
+    <div style="margin-top: 20px;">
+        <a href="index.html#juegos" class="btn" style="background-color: #87ceeb; color: white; border-radius: 20px; padding: 10px 20px; text-decoration: none;">
+            ⬅️ Volver al Inicio
+        </a>
+    </div>
+
+</body>
+</html>
