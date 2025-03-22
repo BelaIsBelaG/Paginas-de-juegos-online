@@ -3,160 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tres en Raya</title>
-    <link rel="shortcut icon" href="imagenes/tres en raya.png" type="image/x-icon">
+    <title>Hoja de Vida - Yajaira Enriquez Saya</title>
+    <link rel="shortcut icon" href="imagenes/cv.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
     <style>
+        /* Estilos generales */
         body {
-            background: linear-gradient(135deg, #6a0dad, #3c3c3c);
-            color: white;
-            text-align: center;
+            background-color: #f4f1f8;
+            color: #5a5a5a;
+            font-family: 'Arial', sans-serif;
         }
         .container {
-            margin-top: 50px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 50px auto;
         }
-        .tablero {
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            grid-gap: 5px;
-            justify-content: center;
-            margin: auto;
-            display: none; /* Ocultar tablero hasta que se seleccione el modo */
+        h2, h3 {
+            color: #8b5e83;
+            text-align: center;
         }
-        .celda {
-            width: 100px;
-            height: 100px;
-            font-size: 2rem;
-            font-weight: bold;
-            background-color: #3c3c3c;
-            color: white;
-            border: 2px solid #6a0dad;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
+        h4 {
+            color: #d46a6a;
+            border-bottom: 2px solid #ffb6c1;
+            padding-bottom: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #ffe4e1;
+            margin: 5px 0;
+            padding: 8px;
             border-radius: 10px;
-            transition: all 0.3s;
         }
-        .celda:hover {
-            background-color: #6a0dad;
+        .btn-primary {
+            background-color: #8b5e83;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+        }
+        .btn-primary:hover {
+            background-color: #6a3f64;
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h2 class="mb-3">🎮 Tres en Raya</h2>
-
-        <!-- Mensaje de selección de modo -->
-        <h4 id="seleccionModo">Selecciona el modo de juego:</h4>
-        <select id="modoJuego" class="form-select w-50 m-auto" onchange="iniciarJuego()">
-            <option value="" selected disabled>-- Seleccionar --</option>
-            <option value="multijugador">Multijugador</option>
-            <option value="vsMaquina">Jugador vs Máquina</option>
-        </select>
-
-        <!-- Mensaje de turno (oculto al inicio) -->
-        <h4 id="mensaje" style="display: none;">Turno de: <span id="turno">X</span></h4>
-
-        <div class="tablero mt-3">
-            <div class="celda" onclick="marcarCelda(this, 0)"></div>
-            <div class="celda" onclick="marcarCelda(this, 1)"></div>
-            <div class="celda" onclick="marcarCelda(this, 2)"></div>
-            <div class="celda" onclick="marcarCelda(this, 3)"></div>
-            <div class="celda" onclick="marcarCelda(this, 4)"></div>
-            <div class="celda" onclick="marcarCelda(this, 5)"></div>
-            <div class="celda" onclick="marcarCelda(this, 6)"></div>
-            <div class="celda" onclick="marcarCelda(this, 7)"></div>
-            <div class="celda" onclick="marcarCelda(this, 8)"></div>
-        </div>
-
-        <button class="btn btn-warning mt-3" onclick="reiniciarJuego()" style="display: none;" id="btnReiniciar">🔄 Reiniciar</button>
+    <div class="container mt-5">
+        <h2 class="text-center">Hoja de Vida</h2>
+        <h3>Yajaira Enriquez Saya</h3>
+        <p><strong>Rol:</strong> Desarrollador</p>
+        <h4>Información Básica</h4>
+        <ul>
+            <li>Edad: 28 años</li>
+            <li>Ciudad: Ciudad Cali valle</li>
+        </ul>
+        <h4>Hobbies</h4>
+        <ul>
+            <li>Programar juegos y aplicaciones</li>
+            <li>Leer sobre tecnología</li>
+           
+        </ul>
+        <h4>Estudios</h4>
+        <ul>
+            <li>Ingeniería en Sistemas - Universidad Antonio jose camacho</li>
+        </ul>
+        <h4>Conocimientos Técnicos</h4>
+        <ul>
+            <li>HTML, CSS, JavaScript, Bootstrap</li>
+            <li>agricultura</li>
+            
+        </ul>
+        <a href="index.html" class="btn btn-primary mt-3">Volver</a>
     </div>
-
-    <script>
-        let turno = "X";
-        let tablero = ["", "", "", "", "", "", "", "", ""];
-
-        function iniciarJuego() {
-            document.getElementById("seleccionModo").style.display = "none"; // Ocultar selección de modo
-            document.getElementById("modoJuego").style.display = "none"; // Ocultar dropdown
-            document.getElementById("mensaje").style.display = "block"; // Mostrar mensaje de turno
-            document.querySelector(".tablero").style.display = "grid"; // Mostrar tablero
-            document.getElementById("btnReiniciar").style.display = "inline-block"; // Mostrar botón de reinicio
-        }
-
-        function marcarCelda(celda, index) {
-            if (tablero[index] === "") {
-                celda.innerText = turno;
-                tablero[index] = turno;
-                if (verificarGanador()) {
-                    document.getElementById("mensaje").innerText = `🎉 ¡Ganador: ${turno}!`;
-                    setTimeout(reiniciarJuego, 2000);
-                    return;
-                }
-                if (verificarEmpate()) {
-                    document.getElementById("mensaje").innerText = "🤝 ¡Empate!";
-                    setTimeout(reiniciarJuego, 2000);
-                    return;
-                }
-
-                turno = turno === "X" ? "O" : "X";
-                document.getElementById("turno").innerText = turno;
-
-                // Si es modo contra la máquina y es turno de 'O', juega la IA
-                if (document.getElementById("modoJuego").value === "vsMaquina" && turno === "O") {
-                    setTimeout(turnoMaquina, 500);
-                }
-            }
-        }
-
-        function turnoMaquina() {
-            let casillasDisponibles = tablero.map((v, i) => (v === "" ? i : null)).filter(v => v !== null);
-            if (casillasDisponibles.length > 0) {
-                let movimiento = casillasDisponibles[Math.floor(Math.random() * casillasDisponibles.length)];
-                document.querySelectorAll(".celda")[movimiento].click(); // Simula un clic de la IA
-            }
-        }
-
-        function verificarGanador() {
-            const combinacionesGanadoras = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], 
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], 
-                [0, 4, 8], [2, 4, 6]
-            ];
-            return combinacionesGanadoras.some(combinacion => 
-                tablero[combinacion[0]] !== "" &&
-                tablero[combinacion[0]] === tablero[combinacion[1]] &&
-                tablero[combinacion[1]] === tablero[combinacion[2]]
-            );
-        }
-
-        function verificarEmpate() {
-            return tablero.every(celda => celda !== "");
-        }
-
-        function reiniciarJuego() {
-            tablero.fill("");
-            document.querySelectorAll(".celda").forEach(celda => celda.innerText = "");
-            turno = "X";
-            document.getElementById("mensaje").innerText = "Turno de: X";
-            document.getElementById("turno").innerText = "X";
-            document.getElementById("seleccionModo").style.display = "block";
-            document.getElementById("modoJuego").style.display = "block";
-            document.getElementById("mensaje").style.display = "none";
-            document.querySelector(".tablero").style.display = "none";
-            document.getElementById("btnReiniciar").style.display = "none";
-        }
-    </script>
-
-    <!-- Botón para volver al inicio -->
-    <div style="margin-top: 20px;">
-        <a href="index.html#juegos" class="btn" style="background-color: #87ceeb; color: white; border-radius: 20px; padding: 10px 20px; text-decoration: none;">
-            ⬅️ Volver al Inicio
-        </a>
-    </div>
-
 </body>
 </html>
