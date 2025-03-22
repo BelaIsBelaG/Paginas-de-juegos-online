@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,27 +9,69 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="bg-dark text-light">
 
     <div class="container text-center mt-5">
-        <div class="card p-4 shadow-lg" style="background: linear-gradient(135deg, #6a0dad, #3c3c3c); border-radius: 15px;">
+        <div class="card p-4 shadow-lg"
+            style="background: linear-gradient(135deg, #6a0dad, #3c3c3c); border-radius: 15px;">
             <h2 class="mb-3 text-white">🎮 Juego del Ahorcado</h2>
             <p class="fs-5 text-warning">Tiempo restante: <span id="timer">60</span> segundos</p>
-            
+
             <!-- Imagen del ahorcado -->
             <img id="ahorcadoImg" src="imagenes/img0.png" alt="Ahorcado" style="width: 150px; margin-bottom: 20px;">
-            
+
             <p id="palabra" class="fs-3 text-white"></p>
-            
-            <input type="text" id="letra" class="form-control text-center mt-3" maxlength="1" style="max-width: 60px; margin: auto;">
+
+            <input type="text" id="letra" class="form-control text-center mt-3" maxlength="1"
+                style="max-width: 60px; margin: auto;">
             <button class="btn btn-warning mt-3 px-4" onclick="adivinarLetra()">Adivinar</button>
-            
+
             <p id="mensaje" class="fs-5 mt-3 text-light"></p>
         </div>
     </div>
 
     <script>
-        const palabras = ["JUEGO", "CODIGO", "AHORCADO", "BOOTSTRAP", "HTML"];
+        const palabras = [
+            "JUEGO", "CODIGO", "AHORCADO", "BOOTSTRAP", "HTML", "CSS", "JAVASCRIPT", "PROGRAMACION",
+            "DESARROLLO", "INFORMATICA", "TECNOLOGIA", "COMPUTADORA", "SOFTWARE", "HARDWARE", "INTERNET", "APLICACION",
+            "SISTEMA", "BASEDEDATOS", "ALGORITMO", "PROGRAMADOR", "DESARROLLADOR", "APRENDER", "EDUCACION", "UNIVERSIDAD",
+            "ESTUDIANTE", "PROFESOR", "MATERIA", "CURSO", "TEORIA", "PRACTICA", "EXAMEN", "APROBAR", "REPROBAR", "CALIFICACION",
+            "NOTA", "APUNTE", "LIBRO", "LECTURA", "ESCRITURA", "CONOCIMIENTO", "ENSEÑANZA", "EDUCAR", "APRENDIZ", "MAESTRO",
+            "UVA", "PERA", "MANZANA", "NARANJA", "PLATANO", "KIWI", "SANDIA", "MELON", "CEREZA",
+            "FRESA", "FRAMBUESA", "ARANDANO", "MANGO", "PINA", "COCO", "LIMON", "LIMA", "MANDARINA", "TORONJA", "DURAZNO",
+            "CIRUELA", "ALBARICOQUE", "HIGO", "PAPAYA", "GUAYABA", "CASA", "ARBOL", "PERRO", "GATO", "CONEJO", "CABALLO",
+            "VACA", "CERDO", "GALLINA", "GALLO", "PATO", "GANSO", "PAVO", "PALOMA", "CUERVO", "HALCON", "AGUILA", "BUHO",
+            "LEON", "TIGRE", "LEOPARDO", "JAGUAR", "PUMA", "LOBO", "ZORRO", "OSO", "ARDILLA", "RATON", "RATA", "HURON",
+            "MURCIELAGO", "CANGURO", "KOALA", "PANDA", "CABRA", "CAMELLO", "ELEFANTE", "RINOCERONTE", "HIPOPOTAMO",
+            "COCODRILO", "SERPIENTE", "TORTUGA", "LAGARTIJA", "IGUANA", "TIBURON", "PULPO", "CALAMAR", "MEDUSA",
+            "ESTRELLADEMAR", "CANGREJO", "LANGOSTA", "CAMARON", "CARACOL", "ALMEJA", "OSTION", "MEJILLON", "PESCADO",
+            "TRUCHA", "SALMON", "ATUN", "BACALAO", "SARDINA", "ANCHOA", "PEZESPADA", "PEZGLOBO", "PEZPAYASO", "PEZANGEL",
+            "PEZMOLLY", "PEZDISCO", "PEZBETA", "PEZGUPPY", "PEZCARPA", "PEZDORADO", "LAMPARA", "FAROL", "VELA", "VIGA",
+            "FARO", "LINTERNA", "FAROLILLO", "CANDIL", "CANDADO", "LLAVE", "CERRADURA", "PUERTA", "VENTANA", "PARED",
+            "TECHO", "PISO", "SUELO", "CIELO", "TIERRA", "MAR", "RIO", "LAGO", "LAGUNA", "CHARCO", "POZA", "FUENTE",
+            "ESTANQUE", "PISCINA", "PLAYA", "OCEANO", "GOLFO", "BAHIA", "ISLA", "PENINSULA", "CONTINENTE", "PAIS",
+            "CIUDAD", "PUEBLO", "ALDEA", "CALLE", "AVENIDA", "CAMINO", "CARRETERA", "AUTOPISTA", "CARRIL", "CARRILLO",
+            "PUENTE", "TUNEL", "CRUCE", "ROTONDA", "GLORIETA", "PLAZA", "PARQUE", "JARDIN", "BOSQUE", "SELVA", "JUNGLA",
+            "SABANA", "PRADERA", "PASTIZAL", "CAMPO", "ESPAÑOL", "INGLES", "FRANCES", "ALEMAN", "ITALIANO", "PORTUGUES",
+            "RUSO", "CHINO", "JAPONES", "COREANO", "ARABE", "HINDI", "CARRO", "MOTO", "BICICLETA", "CAMION", "AVION",
+            "HELICOPTERO", "BARCO", "LANCHA", "YATE", "SUBMARINO", "TREN", "METRO", "TRAMVIA", "AUTOBUS", "CAMIONETA",
+            "FURGONETA", "TAXI", "AMBULANCIA", "BOMBERO", "POLICIA", "PATINETA", "PATINES", "ESQUIS", "SNOWBOARD", "SURF",
+            "KAYAK", "CANOA", "RAFTING", "PARACAIDAS", "ALPINISMO", "ESCALADA", "RAPPEL", "TIROLESA", "PUENTING", "BUNGEE",
+            "CICLISMO", "CARRERAS", "ATLETISMO", "NATACION", "BASQUETBOL", "VOLEIBOL", "FUTBOL", "TENIS", "GOLF", "RUGBY",
+            "BEISBOL", "SOFTBOL", "HOCKEY", "PATINAJE", "NIÑOS", "NIÑAS", "ADOLESCENTES", "JOVENES", "ADULTOS", "HOMBRES",
+            "CASCADA", "ANIME", "MANGA", "COSPLAY", "OTAKU", "JAPON", "NARUTO", "ONEPIECE", "DRAGONBALL", "BLEACH",
+            "DEATHNOTE", "ATTACKONTITAN", "TOKYOGHOUL", "MYHEROACADEMIA", "BLACKCLOVER", "DEMONSLAYER", "ONEPUNCHMAN",
+            "FAIRYTAIL", "HUNTERXHUNTER", "NANATSUNOTAIZAI", "KIMETSUNOYAIBA", "SHINGEKINOKYOJIN", "BOKUNOHEROACADEMIA",
+            "PELICULAS", "SERIES", "DOCUMENTALES", "ANIMACION", "ACCION", "AVENTURA", "COMEDIA", "DRAMA", "ROMANCE",
+            "TERROR", "SUSPENSO", "FANTASIA", "CIENCIAFICCION", "MISTERIO", "CRIMEN", "POLICIACO", "THRILLER", "GUERRA",
+            "HISTORIA", "BIOGRAFIA", "MUSICAL", "INFANTIL", "FAMILIAR", "ALIMENTO", "COMIDA", "BEBIDA", "FRUTA", "VERDURA",
+            "CARNES", "MARISCOS", "KDRAMA", "KPOP", "KBEAUTY", "KFOOD", "BAÑO", "DUCHA", "LAVABO", "LAVAMANOS", "INODORO",
+            "RETRETE", "BIDET", "JABON", "CHAMPÚ", "ACONDICIONADOR", "ESPONJA", "TOALLA", "TOALLITA", "ALFOMBRA", "CORTINA",
+            "ESPEJO", "CEPILLO", "PEINE", "SECADOR", "RIZADOR", "PLANCHADOR", "CORTAUÑAS", "LIMA", "PINZAS", "TENAZAS",
+            "TENEDOR", "CUCHARA", "CUBIERTO", "PLATO", "VASO", "TAZA"
+        ];
+
         let palabraSecreta, palabraOculta, tiempoRestante, timer;
         let intentosIncorrectos = 0;
         let letrasIngresadas = new Set();
@@ -115,10 +158,12 @@
 
     <!-- Botón para volver al inicio -->
     <div style="margin-top: 20px;">
-        <a href="index.html#juegos" class="btn" style="background-color: #87ceeb; color: white; border-radius: 20px; padding: 10px 20px; text-decoration: none;">
+        <a href="index.html#juegos" class="btn"
+            style="background-color: #87ceeb; color: white; border-radius: 20px; padding: 10px 20px; text-decoration: none;">
             ⬅️ Volver al Inicio
         </a>
     </div>
 
 </body>
+
 </html>
